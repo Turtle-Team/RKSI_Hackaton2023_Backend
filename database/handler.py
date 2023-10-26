@@ -50,7 +50,7 @@ class Db:
         self.connection.commit()
         return True
 
-    def get_user_by_token(self, token: str):
+    def select_user_by_token(self, token: str):
         self.cursor.execute("SELECT * FROM tokens WHERE token=%s", (token,))
         return self.cursor.fetchone()
 
@@ -72,11 +72,19 @@ class Db:
     def select_doc_type(self):
         sql = """SELECT * FROM `doc_type`"""
         self.cursor.execute(sql)
-        return list(map(lambda x: x[0], self.cursor.fetchall()))
+        return self.cursor.fetchall()
+
+    def insert_new_doc_requests(self, type: int, fio: str, from_id: str, platform: str, description: str) -> bool:
+        sql = """INSERT INTO doc_requests(type, fio, from_id, platform, description) VALUES (%s, %s, %s, %s, %s)"""
+        self.cursor.execute(sql, (type, fio, from_id, platform, description))
+        return True
+
+    def select_doc_dont_ready(self) -> typing.List[list]:
+        sql = """SELECT * FROM `doc_requests` WHERE is_ready=0"""
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()
 
     def __del__(self):
         self.connection.commit()
         self.cursor.close()
         self.connection.close()
-
-

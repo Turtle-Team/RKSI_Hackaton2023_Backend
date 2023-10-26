@@ -1,14 +1,16 @@
-import swagger.user.namespace
+import swagger.doc.namespace
 import flask_restplus
 
-AUTH_USER = swagger.user.namespace.user.model(
-    "DOC_IS_TEACHING",
+DOC_CREATE = swagger.doc.namespace.doc.model(
+    "DOC_CREATE",
     {
-        "uid": flask_restplus.fields.String(description="уникальый айди в соц. платформе", required=True),
-        "platform": flask_restplus.fields.String(description="платформа откуда пришел запрос", required=True),
-        "from_name": flask_restplus.fields.String(description="Для кого (ФИО) выдан документ", required=True),
-        "group_name": flask_restplus.fields.String(description="Группа, в которой учится студент", required=True),
+        "type": flask_restplus.fields.Integer(description="Тип документа из запроса doc/type", required=True),
+        "fio": flask_restplus.fields.String(description="ФИО студента", required=True),
+        "from_id": flask_restplus.fields.String(description="Айди в соц сети откуда пришел запрос", required=True),
+        "platform": flask_restplus.fields.String(description="Платформа соцсети", required=True),
+        "description": flask_restplus.fields.String(description="Описание самого запроса (что хочет студент)", required=True)
     },
 )
+
 
 

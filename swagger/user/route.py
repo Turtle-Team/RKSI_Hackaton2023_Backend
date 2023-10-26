@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 import flask
@@ -20,7 +21,8 @@ class NewUser(flask_restplus.Resource):
         data = flask.request.json
         if not data.get('login') or not data.get('password'):
             return flask_app.app.response_class(status=400)
-        status_code = 200 if database.handler.Db().new_user(data.get('login'), data.get('password')) else 409
+        password = hashlib.sha256(data.get('password').encode()).hexdigest()
+        status_code = 200 if database.handler.Db().new_user(data.get('login'), password) else 409
         return flask_app.app.response_class(status=status_code)
 
 @user.route('/auth', methods=['GET'])
@@ -32,7 +34,8 @@ class AuthUser(flask_restplus.Resource):
         data = flask.request.args
         if not data.get('login') or not data.get('password'):
             return flask_app.app.response_class(status=400)
-        token = database.processor.DataProcessor().auth_user(data.get('login'), data.get('password'))
+        password = hashlib.sha256(data.get('password').encode()).hexdigest()
+        token = database.processor.DataProcessor().auth_user(data.get('login'), password)
         result = {"token": token}
         if token is None:
             status_code = 401
@@ -58,5 +61,6 @@ class UserTotp(flask_restplus.Resource):
         data = flask.request.json
         if not data.get('login') or not data.get('password'):
             return flask_app.app.response_class(status=400)
-        status_code = 200 if database.handler.Db().new_user(data.get('login'), data.get('password')) else 409
+        password = hashlib.sha256(data.get('password')).hexdigest()
+        status_code = 200 if database.handler.Db().new_user(data.get('login'), password) else 409
         return flask_app.app.response_class(status=status_code)

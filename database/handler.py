@@ -69,6 +69,10 @@ class Db:
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
+    def select_doc_type(self):
+        sql = """SELECT * FROM `doc_type`"""
+        self.cursor.execute(sql)
+        return list(map(lambda x: x[0], self.cursor.fetchall()))
 
     def __del__(self):
         self.connection.commit()

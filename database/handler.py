@@ -84,6 +84,11 @@ class Db:
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
+    def update_doc_status(self, doc_id: int):
+        sql = """UPDATE `doc_requests` SET is_ready=1 WHERE doc_id=%s"""
+        self.cursor.execute(sql, (doc_id, ))
+        return True
+
     def __del__(self):
         self.connection.commit()
         self.cursor.close()

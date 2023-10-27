@@ -1,4 +1,4 @@
-DATABASE = {'password': '', 'login': 'root', 'ip': '127.0.0.1', 'basename': 'myapps'}
+DATABASE = {'password': '', 'login': 'root', 'ip': '192.168.1.92', 'basename': 'myapps'}
 # DATABASE = {'password': '2374619', 'login': 'root', 'ip': '45.155.207.232', 'basename': 'test_hack_base'}
 
 
@@ -8,10 +8,9 @@ BOT_ID = "164805438" # prod
 # BOT_ID = "211162820" # test
 
 # FLASK_IP = "45.155.207.232"
-FLASK_IP = "192.168.1.92"
+# FLASK_IP = "192.168.1.92"
 # FLASK_IP = "localhost"
-# FLASK_IP = "0.0.0.0"
-
+FLASK_IP = "0.0.0.0"
 URL_SWAGGER = '/swagger/'
 API_VER = "2.1"
 FLASK_PORT = 12222

@@ -2,6 +2,8 @@ import datetime
 import hashlib
 import random
 import typing
+import datetime
+
 
 import mysql.connector
 
@@ -66,6 +68,18 @@ class Db:
 
     def select_division_all(self):
         sql = """SELECT * FROM `division`"""
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()
+
+    def insert_new_homework(self, date_homework: datetime, group: str, item: str, homework: str):
+        sql = """INSERT INTO `homework` (`date_homework`, `group`, `item`, `homework`) VALUES (%s, %s, %s, %s)"""
+        self.cursor.execute(sql, (date_homework, group, item, homework,))
+        self.connection.commit()
+        return True
+
+
+    def select_homework_all(self):
+        sql = """SELECT * FROM `homework`"""
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 

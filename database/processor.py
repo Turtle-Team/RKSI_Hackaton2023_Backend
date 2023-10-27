@@ -36,3 +36,10 @@ class DataProcessor:
         for i in database.handler.Db().select_division_all():
             divisions.append(database.obj.Division(*i).to_dict())
         return divisions
+
+
+    def get_homework_all(self):
+        homework = []
+        for i in database.handler.Db().select_homework_all():
+            homework.append(database.obj.Homework(*i).to_dict())
+        return homework
